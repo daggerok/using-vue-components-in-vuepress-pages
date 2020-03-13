@@ -1,0 +1,29 @@
+env:
+  global:
+    - TERM=dumb
+    - secure: "XmkhcWggAEew6OepgC0YEvmqVjDd5Y5SNVpUqMLFKoqJQyXGuecw9NNJVD2o8BUz8hRSwGBF3Q9GtEt6xoSWKzCyKWuy7ft9WNtRNFXODytyj9HReOX2jkqCZVM6FKaGXxXYiDb4h+NChRvzFPny/ULYqx/SRVXVLRi1Gd7ouPKW5CQ1Sp2k0AshckSMZcHKqg1dc8dx9reGU1NKCPvpfG/MtcoS6fj0S6kiHXqXfRA844mC0wWJd/OGPkHabRVMX+HCZ+Hi9K5V3LMdwIlFCUO9IxhUoT0iqQSrmXGFoAPyIbsyc/GXnOuocAWElU/+1YuGuFGrWq31CDNuo89h0R0SCddxDi4x/n5u17eRJt+4N/YgkzVumR1NBfJv8kINpboD7REHfeXBR6dSfcU0R3xB5ZzgM5AI/0XYHJkIO/f1ajPb/jLyaP5eVKp/z2MYP+hSyJCTA7c2I+iH8IKb5+c7l1GZQQ4PXtWkcYjtHp2huIAPXzbcygar1Olo6R5LLk5JEphDzT5bHjUWvGi0XmJZ6ERzOtHhHQjeZbfUqELdXS9D4KytzUFrfV3luO9Iv6KqoMihRvIPT+o0bLN0WKzUTZHOWzzeuWV/0LyUeS9B604PRXX5M3NwAn6jJy4TVLM4NOOOrxDpsk/yDVD/ctLZOSv0ekOcJW0+UYARenY="
+language: node_js
+node_js: lts/*
+install: true
+script:
+  - npm i
+  - npm run build
+cache:
+  npm: true
+  directories:
+    - node_modules
+    - ~/.n*
+before_deploy:
+  - set -e
+  - cd $TRAVIS_BUILD_DIR && npm i -E
+  - cd $TRAVIS_BUILD_DIR && npm run gh
+deploy: &pages
+  provider: pages
+  skip-cleanup: true
+  keep-history: true
+  target_branch: gh-pages
+  github-token: "$GITHUB_TOKEN"
+  local-dir: $TRAVIS_BUILD_DIR/.vuepress/dist
+  on:
+    branch: master
+    condition: "$TRAVIS_PULL_REQUEST = false"

@@ -1,0 +1,22 @@
+{
+  "name": "using-vue-components-in-vuepress-pages",
+  "version": "1.0.0",
+  "description": "Using Vue components on VuePress pages",
+  "main": "README.md",
+  "scripts": {
+    "start": "vuepress dev",
+    "build": "vuepress build",
+    "gh": "cross-env BASE_HREF='/using-vue-components-in-vuepress-pages/' npm run build"
+  },
+  "keywords": [
+    "cross-env",
+    "vuepress",
+    "vue"
+  ],
+  "author": "daggerok",
+  "license": "MIT",
+  "devDependencies": {
+    "cross-env": "7.0.2",
+    "vuepress": "1.3.1"
+  }
+}
